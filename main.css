@@ -3,17 +3,34 @@ div {
 }
 
 td {
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
     text-align: center;
-    border: 2 solid black;
+    border: solid;
+    background-color: whitesmoke;
 }
 
 table {
     margin-left: auto;
     margin-right: auto;
+    border: solid;
 }
 
 .full {
     background-color: black;
+    color: whitesmoke;
+    border: solid;
+    border-color: black;
+}
+
+.empty {
+    background-color: whitesmoke;
+    color: black;
+    border: solid;
+    border-color: black;
+}
+
+td:hover {
+    background-color: purple;
+    color: whitesmoke;
 }
