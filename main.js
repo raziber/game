@@ -50,15 +50,34 @@ function empty(i, j){
 }
 
 function handle_click(i, j){
-    /*
-    if(board[i][j]){
-        empty(i, j);
-    }else{
-        fill(i, j);
-    }
-    */
-    ///*
     if(!board[i][j]){
+
+        for(var dir = 0; dir < 8; dir++){
+            if(dir == 2||dir == 6){
+                var a = 0;
+            }else{
+                if(dir > 2 && dir < 6){
+                    var a = 1;
+                }else{
+                    var a = -1;
+                }
+            }
+            if(dir == 0||dir == 4){
+                var b = 0;
+            }else{
+                if(dir > 0 && dir < 4){
+                    var b = 1;
+                }else{
+                    var b = -1;
+                }
+            }
+
+            if(board[i+a][j+b]){
+                move_in_dir(i+a, j+b, dir, a, b);
+            }
+        }
+    }
+        /*
         move_in_dir(i-1, j+1, 1);
         move_in_dir(i-1, j, 0);
         move_in_dir(i, j+1, 2);
@@ -67,40 +86,52 @@ function handle_click(i, j){
         move_in_dir(i+1, j-1, 5);
         move_in_dir(i, j-1, 6);
         move_in_dir(i-1, j-1, 7);
-    }
-    //*/
+    
+    */
 }
 
+function move_in_dir(i, j, dir, a, b){
+    if((a == -1 && i == 0 || a == 1 && i == height - 1)||(b == -1 && j == 0 || b == 1 && j == width - 1)){
+        return;
+    }else{
+        if(board[i+a][j+b]){
+            move_in_dir(i+a, j+b, dir, a, b);
+        }else{
+            empty(i, j);
+            fill(i+a, j+b);
+        }
+    }
+}
+
+/*
 function move_in_dir(i, j, dir){
     switch(dir){
         case 0:
-            if(board[i][j]){
-                if(i == 0){
-                    return;
+            if(i == 0){
+                return;
+            }else{
+                if(board[i-1][j]){
+                    move_in_dir(i-1, j, dir);
                 }else{
-                    if(board[i-1][j]){
-                        move_in_dir(i-1, j, dir);
-                    }else{
-                        empty(i, j);
-                        fill(i-1, j);
-                    }
+                    empty(i, j);
+                    fill(i-1, j);
                 }
             }
+
             break;
 
         case 1:
-            if(board[i][j]){
-                if(i == 0 || j == width - 1){
-                    return;
+            if(i == 0 || j == width - 1){
+                return;
+            }else{
+                if(board[i-1][j+1]){
+                    move_in_dir(i-1, j+1, dir);
                 }else{
-                    if(board[i-1][j+1]){
-                        move_in_dir(i-1, j+1, dir);
-                    }else{
-                        empty(i, j);
-                        fill(i-1, j+1);
-                    }
+                    empty(i, j);
+                    fill(i-1, j+1);
                 }
             }
+
             break;
 
         case 2:
@@ -176,6 +207,7 @@ function move_in_dir(i, j, dir){
             }
     }
 }
+*/
 
 $(document).ready(function(){
     var tableContents = generate_table_html(SIZE, SIZE);
